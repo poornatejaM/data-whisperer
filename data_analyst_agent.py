@@ -19,7 +19,21 @@ uploaded_file = st.file_uploader("📤 Upload a CSV file", type=["csv"])
 
 # Load DataFrame
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
+    try:
+        # Read entire file content into memory
+        file_bytes = uploaded_file.read()
+        
+        # First try default UTF-8 encoding
+        try:
+            df = pd.read_csv(io.BytesIO(file_bytes))
+        except UnicodeDecodeError:
+            # Fallback to latin1 encoding
+            df = pd.read_csv(io.BytesIO(file_bytes), encoding='latin1')
+            st.warning("Automatically used 'latin1' encoding to read the file.")
+    
+    except Exception as e:
+        st.error(f"Error reading file: {str(e)}. Please ensure it's a valid CSV.")
+        st.stop()
     st.success("✅ File uploaded successfully!")
 
     st.subheader("🧾 Dataset Preview")
