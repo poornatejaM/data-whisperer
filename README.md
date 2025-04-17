@@ -48,3 +48,7 @@ pip install -r requirements.txt
 ```bash
 streamlit run data_analyst_agent.py
 ```
+
+An AI-powered data analysis tool that turns your questions into actionable insights. Upload your CSV data and get step-by-step analysis with Python code generation and visualizations.
+
+**Deployed App**: (https://data-whisperer.streamlit.app/)
